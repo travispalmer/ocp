@@ -254,3 +254,4 @@ paket-files/
 # Ansible
 vars.yml
 *.retry
+azuredeploy.parameters.json
