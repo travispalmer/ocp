@@ -123,15 +123,6 @@
 				"description": "Use Managed or Unmanaged Disks"
 			}
 		},
-		"openshiftClusterPrefix": {
-			"type": "string",
-			"defaultValue": "mycluster",
-			"minLength": 4,
-			"maxLength": 20,
-			"metadata": {
-				"description": "OpenShift cluster prefix. Used to generate master, infra and node hostnames. Maximum of 20 characters."
-			}
-		},
 		"masterInstanceCount": {
 			"type": "int",
 			"defaultValue": 3,
@@ -529,12 +520,11 @@
 		"apiVersionLinkTemplate": "2015-01-01",
 		"routingSubDomain": "[toLower(parameters('routingSubDomain'))]",
 		"masterClusterDns": "[toLower(parameters('masterClusterDns'))]",
-		"namingInfix": "[toLower(parameters('openshiftClusterPrefix'))]",
-		"openshiftBastionHostname": "[concat(variables('namingInfix'), '-bastion')]",
-		"openshiftMasterHostname": "[concat(variables('namingInfix'), '-master')]",
-		"openshiftNodeHostname": "[concat(variables('namingInfix'), '-node')]",
-		"openshiftInfraHostname": "[concat(variables('namingInfix'), '-infra')]",
-		"openshiftCnsHostname": "[concat(variables('namingInfix'), '-cns')]",
+		"openshiftBastionHostname": "['bastion')]",
+		"openshiftMasterHostname": "master",
+		"openshiftNodeHostname": "node",
+		"openshiftInfraHostname": "infra",
+		"openshiftCnsHostname": "cns",
 		"newStorageAccountBastion": "[concat('bastion', uniqueString(concat(resourceGroup().id, 'bsa')))]",
 		"newStorageAccountMaster": "[concat('master', uniqueString(concat(resourceGroup().id, 'msa')))]",
 		"newStorageAccountInfra": "[concat('infra', uniqueString(concat(resourceGroup().id, 'isa')))]",
