@@ -510,6 +510,13 @@
 				"description": "If custom proxy settings selected, enter no_proxy settings to use"
 			}
 		}
+		"domainName": {
+			"type": "string",
+			"defaultValue": "",
+			"metadata": {
+				"description": "Name of the domain the VM exists in."
+			}
+		}
 	},
 	"variables": {
 		"location": "[resourceGroup().location]",
