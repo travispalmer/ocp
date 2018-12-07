@@ -2699,6 +2699,9 @@
 					},
 					"noProxyEntry": {
 						"value": "[parameters('noProxyEntry')]"
+					},
+					"domainName": {
+						"value": "[parameters('domainName')]"
 					}
 				}
 			}
