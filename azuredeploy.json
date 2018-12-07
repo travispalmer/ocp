@@ -509,7 +509,7 @@
 			"metadata": {
 				"description": "If custom proxy settings selected, enter no_proxy settings to use"
 			}
-		}
+		},
 		"domainName": {
 			"type": "string",
 			"defaultValue": "",
