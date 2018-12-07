@@ -520,7 +520,7 @@
 		"apiVersionLinkTemplate": "2015-01-01",
 		"routingSubDomain": "[toLower(parameters('routingSubDomain'))]",
 		"masterClusterDns": "[toLower(parameters('masterClusterDns'))]",
-		"openshiftBastionHostname": "['bastion')]",
+		"openshiftBastionHostname": "bastion",
 		"openshiftMasterHostname": "master",
 		"openshiftNodeHostname": "node",
 		"openshiftInfraHostname": "infra",
