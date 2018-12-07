@@ -50,6 +50,7 @@ else
 fi
 
 subscription-manager attach --pool=$POOL_ID > attach.log
+sleep 5
 if [ $? -eq 0 ]
 then
     echo "Pool attached successfully"
