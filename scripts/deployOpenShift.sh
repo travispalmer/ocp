@@ -2,7 +2,8 @@
 
 echo $(date) " - Starting Script"
 
-set -e
+#set -e
+set -x
 
 export SUDOUSER=$1
 export PASSWORD="$2"
@@ -47,13 +48,22 @@ export PROXYSETTING=${40}
 export HTTPPROXYENTRY="${41}"
 export HTTSPPROXYENTRY="${42}"
 export NOPROXYENTRY="${43}"
+export DOMAIN=${44 }
 export BASTION=$(hostname)
+
+echo $(date) " - DOMAIN: " $DOMAIN
+if [ $DOMAIN != "" ]
+then
+    # tbp set ifcfg-eth0 to use domain
+    echo $(date) " - Update bastion to honor domain: $DOMAIN"
+    ansible localhost -o -f 30 -b -m lineinfile -a "dest=/etc/sysconfig/network-scripts/ifcfg-eth0 line=DOMAIN=$DOMAIN"
+    systemctl restart network
+fi
 
 # Set CNS to default storage type.  Will be overridden later if Azure is true
 export CNS_DEFAULT_STORAGE=true
 
 # Setting DOMAIN variable
-export DOMAIN=`domainname -d`
 
 # Determine if Commercial Azure or Azure Government
 CLOUD=$( curl -H Metadata:true "http://169.254.169.254/metadata/instance/compute/location?api-version=2017-04-02&format=text" | cut -c 1-2 )
@@ -596,8 +606,8 @@ echo $(date) " - Deleting unecessary files"
 rm -rf /home/${SUDOUSER}/openshift-container-platform-playbooks
 
 # Delete pem files
-echo $(date) " - Delete pem files"
-rm -rf /tmp/*.pem
+# echo $(date) " - Delete pem files"
+# rm -rf /tmp/*.pem
 
 echo $(date) " - Sleep for 30"
 sleep 30
