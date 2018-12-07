@@ -48,7 +48,7 @@ export PROXYSETTING=${40}
 export HTTPPROXYENTRY="${41}"
 export HTTSPPROXYENTRY="${42}"
 export NOPROXYENTRY="${43}"
-export DOMAIN=${44 }
+export DOMAIN=${44}
 export BASTION=$(hostname)
 
 echo $(date) " - DOMAIN: " $DOMAIN
