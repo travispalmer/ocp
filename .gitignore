@@ -255,3 +255,4 @@ paket-files/
 vars.yml
 *.retry
 azuredeploy.parameters.json
+azuredeploy.parameters - wusdev1.json
