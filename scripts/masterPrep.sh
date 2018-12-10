@@ -1,6 +1,9 @@
 #!/bin/bash
 echo $(date) " - Starting Master Prep Script"
 
+#set -e
+set -x
+
 export USERNAME_ORG=$1
 export PASSWORD_ACT_KEY="$2"
 export POOL_ID=$3
@@ -10,8 +13,10 @@ export HTTPPROXYENTRY="$6"
 export HTTSPPROXYENTRY="$7"
 export NOPROXYENTRY="$8"
 
-# Remove RHUI
+#Set subscription manager logging to DEBUG
+sed -i -e 's/default_log_level = INFO/default_log_level = DEBUG/g' /etc/rhsm/rhsm.conf
 
+# Remove RHUI
 rm -f /etc/yum.repos.d/rh-cloud.repo
 sleep 10
 
@@ -35,7 +40,7 @@ fi
 # Register Host with Cloud Access Subscription
 echo $(date) " - Register host with Cloud Access Subscription"
 
-subscription-manager register --force --username="$USERNAME_ORG" --password="$PASSWORD_ACT_KEY" || subscription-manager register --force --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
+subscription-manager register --force --username="$USERNAME_ORG" --password="$PASSWORD_ACT_KEY" #|| subscription-manager register --force --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
 RETCODE=$?
 
 if [ $RETCODE -eq 0 ]
