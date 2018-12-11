@@ -1,5 +1,6 @@
 #!/bin/bash
 echo $(date) " - Starting Bastion Prep Script"
+set -x
 
 export USERNAME_ORG=$1
 export PASSWORD_ACT_KEY="$2"
