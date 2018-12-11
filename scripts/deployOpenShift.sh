@@ -602,8 +602,8 @@ echo $(date) " - Re-enabling requiretty"
 sed -i -e "s/# Defaults    requiretty/Defaults    requiretty/" /etc/sudoers
 
 # Delete yaml files
-echo $(date) " - Deleting unecessary files"
-rm -rf /home/${SUDOUSER}/openshift-container-platform-playbooks
+# echo $(date) " - Deleting unecessary files"
+# rm -rf /home/${SUDOUSER}/openshift-container-platform-playbooks
 
 # Delete pem files
 # echo $(date) " - Delete pem files"
