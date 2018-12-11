@@ -256,3 +256,4 @@ vars.yml
 *.retry
 azuredeploy.parameters.json
 azuredeploy.parameters - wusdev1.json
+azuredeploy.parameters - wusqa0.json

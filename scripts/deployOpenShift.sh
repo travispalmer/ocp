@@ -593,6 +593,15 @@ then
 	az network public-ip delete -g $RESOURCEGROUP -n $INFRAPIPNAME
 fi
 
+# Setting up registry cert while master nodes are still schedulable
+echo $(date) " - Setting up registry cert"
+cat /tmp/routingcert.pem /tmp/routingkey.pem > /tmp/registryconsole.cert
+runuser -l $SUDOUSER -c "oc create secret generic console-secret --from-file=/tmp/registryconsole.cert"
+runuser -l $SUDOUSER -c "oc set volume dc/registry-console --add --type=secret --secret-name=console-secret -m /etc/cockpit/ws-certs.d"
+
+echo $(date) " - Sleep for 30"
+sleep 30
+
 # Setting Masters to non-schedulable
 echo $(date) " - Setting Masters to non-schedulable"
 runuser -l $SUDOUSER -c "ansible-playbook -f 10 ~/openshift-container-platform-playbooks/reset-masters-non-schedulable.yaml"
