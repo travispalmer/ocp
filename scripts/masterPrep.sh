@@ -18,7 +18,7 @@ sed -i -e 's/default_log_level = INFO/default_log_level = DEBUG/g' /etc/rhsm/rhs
 
 # Remove RHUI
 rm -f /etc/yum.repos.d/rh-cloud.repo
-sleep 10
+sleep 120
 
 # Configure Proxy settings
 if [[ $PROXYSETTING == "custom" ]]
@@ -42,6 +42,8 @@ echo $(date) " - Register host with Cloud Access Subscription"
 
 subscription-manager register --force --username="$USERNAME_ORG" --password="$PASSWORD_ACT_KEY" #|| subscription-manager register --force --activationkey="$PASSWORD_ACT_KEY" --org="$USERNAME_ORG"
 RETCODE=$?
+
+echo "subscription manager retcode: $RETCODE"
 
 if [ $RETCODE -eq 0 ]
 then
