@@ -49,6 +49,9 @@ export HTTPPROXYENTRY="${41}"
 export HTTSPPROXYENTRY="${42}"
 export NOPROXYENTRY="${43}"
 export DOMAIN=${44}
+export IDENTNAME=${45}
+export IDENTAPPIDURI=${46}
+export IDENTAPPSECRET=${47}
 export BASTION=$(hostname)
 
 echo $(date) " - DOMAIN: " $DOMAIN
@@ -379,7 +382,9 @@ $HAMODE
 $MASTERCLUSTERADDRESS
 
 # Enable HTPasswdPasswordIdentityProvider
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+#openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+openshift_master_openid_ca_file=/tmp/msftAad.crt
+openshift_master_identity_providers=[{"name": "$IDENTNAME", "login": "true", "challenge": "false", "kind": "OpenIDIdentityProvider", "client_id": "$IDENTAPPIDURI", "client_secret": "$IDENTAPPSECRET", "claims": {"id": ["sub"], "preferredUsername": ["upn","unique_name"], "name": ["name"], "email": ["email"]}, "urls": {"authorize": "https://login.microsoftonline.com/$TENANTID/oauth2/authorize", "token": "https://login.microsoftonline.com/$TENANTID/oauth2/token"}}]
 
 # Setup metrics
 openshift_metrics_install_metrics=false

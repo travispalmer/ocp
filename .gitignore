@@ -257,3 +257,4 @@ vars.yml
 azuredeploy.parameters.json
 azuredeploy.parameters - wusdev1.json
 azuredeploy.parameters - wusqa0.json
+azuredeploy.parameters - wusdev0.json

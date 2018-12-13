@@ -507,6 +507,24 @@
 			"metadata": {
 				"description": "Name of the domain the VM exists in."
 			}
+		},
+		"identityProviderName": {
+			"type": "string",
+			"metadata": {
+				"description": "Name of the azure registered app used for identity managment."
+			}
+		},
+		"identityAppIDUri": {
+			"type": "string",
+			"metadata": {
+				"description": "App ID URI of the azure registered app used for identity managment."
+			}
+		},
+		"identityAppSecret": {
+			"type": "string",
+			"metadata": {
+				"description": "Secret for the azure registered app used for identity managment."
+			}
 		}
 	},
 	"variables": {
@@ -2691,6 +2709,15 @@
 						"value": "[parameters('noProxyEntry')]"
 					},
 					"domainName": {
+						"value": "[parameters('domainName')]"
+					},
+					"identityProviderName": {
+						"value": "[parameters('domainName')]"
+					},
+					"identityAppIDUri": {
+						"value": "[parameters('domainName')]"
+					},
+					"identityAppSecret": {
 						"value": "[parameters('domainName')]"
 					}
 				}
