@@ -2712,13 +2712,13 @@
 						"value": "[parameters('domainName')]"
 					},
 					"identityProviderName": {
-						"value": "[parameters('domainName')]"
+						"value": "[parameters('identityProviderName')]"
 					},
 					"identityAppIDUri": {
-						"value": "[parameters('domainName')]"
+						"value": "[parameters('identityAppIDUri')]"
 					},
 					"identityAppSecret": {
-						"value": "[parameters('domainName')]"
+						"value": "[parameters('identityAppSecret')]"
 					}
 				}
 			}
