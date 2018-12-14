@@ -383,8 +383,10 @@ $MASTERCLUSTERADDRESS
 
 # Enable HTPasswdPasswordIdentityProvider
 #openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
-openshift_master_openid_ca_file=/tmp/msftAad.crt
+
+# Enable Azure Active Directory as ID provider.
 openshift_master_identity_providers=[{"name": "$IDENTNAME", "login": "true", "challenge": "false", "kind": "OpenIDIdentityProvider", "client_id": "$IDENTAPPIDURI", "client_secret": "$IDENTAPPSECRET", "claims": {"id": ["sub"], "preferredUsername": ["upn","unique_name"], "name": ["name"], "email": ["email"]}, "urls": {"authorize": "https://login.microsoftonline.com/$TENANTID/oauth2/authorize", "token": "https://login.microsoftonline.com/$TENANTID/oauth2/token"}}]
+openshift_master_openid_ca_file=/tmp/msftAad.crt
 
 # Setup metrics
 openshift_metrics_install_metrics=false
@@ -606,6 +608,9 @@ echo $(date) " - Setting up registry cert"
 cat /tmp/routingcert.pem /tmp/routingkey.pem > /tmp/registryconsole.cert
 runuser -l $SUDOUSER -c "oc create secret generic console-secret --from-file=/tmp/registryconsole.cert"
 runuser -l $SUDOUSER -c "oc set volume dc/registry-console --add --type=secret --secret-name=console-secret -m /etc/cockpit/ws-certs.d"
+
+runuser -l $SUDOUSER -c "oc get route docker-registry -o yaml | sed \"s/passthrough/reencrypt/g\" > /tmp/docker-reg.yml"
+runuser -l $SUDOUSER -c "oc apply -f docker-reg.yml"
 
 echo $(date) " - Sleep for 30"
 sleep 30
