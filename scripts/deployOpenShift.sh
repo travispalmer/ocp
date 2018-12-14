@@ -609,8 +609,9 @@ cat /tmp/routingcert.pem /tmp/routingkey.pem > /tmp/registryconsole.cert
 runuser -l $SUDOUSER -c "oc create secret generic console-secret --from-file=/tmp/registryconsole.cert"
 runuser -l $SUDOUSER -c "oc set volume dc/registry-console --add --type=secret --secret-name=console-secret -m /etc/cockpit/ws-certs.d"
 
+echo $(date) " - Setting docker-registry route to reencrypt"
 runuser -l $SUDOUSER -c "oc get route docker-registry -o yaml | sed \"s/passthrough/reencrypt/g\" > /tmp/docker-reg.yml"
-runuser -l $SUDOUSER -c "oc apply -f docker-reg.yml"
+runuser -l $SUDOUSER -c "oc apply -f /tmp/docker-reg.yml"
 
 echo $(date) " - Sleep for 30"
 sleep 30
