@@ -27,7 +27,7 @@
 param(
  [Parameter(Mandatory=$False)]
  [string]
- $resourceGroupName="ocp-wusqa0-rg",
+ $resourceGroupName="ocp-wusdev0-rg",
 
  [string]
  $resourceGroupLocation="westus",
@@ -64,8 +64,8 @@ function UpdateAADReplyUrls {
         [string]$ResourceProviderNamespace
     )
     $params = Get-Content $parametersFilePath | ConvertFrom-Json
-    $appId = $params.parameters.aadClientId.value
-    $app = Get-AzureRmADApplication -ApplicationId $appId
+    $displayName = $params.parameters.identityProviderName.value
+    $app = Get-AzureRmADApplication -DisplayName $displayName
     
     $replyURLs = @()
     $app.ReplyUrls | foreach{$replyURLs += ($_)}
