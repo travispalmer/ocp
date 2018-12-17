@@ -27,7 +27,7 @@
 param(
  [Parameter(Mandatory=$False)]
  [string]
- $resourceGroupName="ocp-wusdev1-rg",
+ $resourceGroupName="ocp-wusqa0-rg",
 
  [string]
  $resourceGroupLocation="westus",
@@ -59,6 +59,30 @@ Function RegisterRP {
     Register-AzureRmResourceProvider -ProviderNamespace $ResourceProviderNamespace;
 }
 
+function UpdateAADReplyUrls {
+    param(
+        [string]$ResourceProviderNamespace
+    )
+    $params = Get-Content $parametersFilePath | ConvertFrom-Json
+    $appId = $params.parameters.aadClientId.value
+    $app = Get-AzureRmADApplication -ApplicationId $appId
+    
+    $replyURLs = @()
+    $app.ReplyUrls | foreach{$replyURLs += ($_)}
+    $base = $params.parameters.masterClusterDns.value
+    $replyURLs += "https://$base/oauth2callback/$($app.DisplayName)"
+
+    if($replyURLs.Contains($replyUrl) -ne $true)
+    {
+        Write-Host "Reply URL does not exist, adding."
+        Set-AzureRmADApplication -ApplicationId $appId -ReplyUrl $replyURLs
+    }
+    else {
+        Write-Host "Reply URL already exists, not adding."
+    }
+
+    
+}
 #******************************************************************************
 # Script body
 # Execution begins here
@@ -96,6 +120,9 @@ if(!$resourceGroup)
 else{
     Write-Host "Using existing resource group '$resourceGroupName'";
 }
+
+Write-Host "Verify new reply URL is in the Application."
+UpdateAADReplyUrls
 
 if($ServiceAppName -ne "")
 {

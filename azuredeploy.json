@@ -514,12 +514,6 @@
 				"description": "Name of the azure registered app used for identity managment."
 			}
 		},
-		"identityAppIDUri": {
-			"type": "string",
-			"metadata": {
-				"description": "App ID URI of the azure registered app used for identity managment."
-			}
-		},
 		"identityAppSecret": {
 			"type": "string",
 			"metadata": {
@@ -2713,9 +2707,6 @@
 					},
 					"identityProviderName": {
 						"value": "[parameters('identityProviderName')]"
-					},
-					"identityAppIDUri": {
-						"value": "[parameters('identityAppIDUri')]"
 					},
 					"identityAppSecret": {
 						"value": "[parameters('identityAppSecret')]"

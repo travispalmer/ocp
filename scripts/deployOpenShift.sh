@@ -50,7 +50,7 @@ export HTTSPPROXYENTRY="${42}"
 export NOPROXYENTRY="${43}"
 export DOMAIN=${44}
 export IDENTNAME=${45}
-export IDENTAPPIDURI=${46}
+export IDENTAPPIDURI="https://$PRIVATEDNS/oauth2callback/$IDENTNAME"
 export IDENTAPPSECRET=${47}
 export BASTION=$(hostname)
 
