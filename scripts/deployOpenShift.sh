@@ -51,7 +51,7 @@ export NOPROXYENTRY="${43}"
 export DOMAIN=${44}
 export IDENTNAME=${45}
 export IDENTAPPIDURI="https://$PRIVATEDNS/oauth2callback/$IDENTNAME"
-export IDENTAPPSECRET=${47}
+export IDENTAPPSECRET=${46}
 export BASTION=$(hostname)
 
 echo $(date) " - DOMAIN: " $DOMAIN
