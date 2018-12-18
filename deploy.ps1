@@ -59,7 +59,7 @@ Function RegisterRP {
     Register-AzureRmResourceProvider -ProviderNamespace $ResourceProviderNamespace;
 }
 
-function UpdateAADReplyUrls {
+function UpdateAADProvider {
     param(
         [string]$ResourceProviderNamespace
     )
@@ -67,18 +67,36 @@ function UpdateAADReplyUrls {
     $displayName = $params.parameters.identityProviderName.value
     $app = Get-AzureRmADApplication -DisplayName $displayName
     
+    #reply URLs before adding new one
     $replyURLs = @()
     $app.ReplyUrls | foreach{$replyURLs += ($_)}
-    $base = $params.parameters.masterClusterDns.value
-    $replyURLs += "https://$base/oauth2callback/$($app.DisplayName)"
 
-    if($replyURLs.Contains($replyUrl) -ne $true)
+    #identifier URIs before adding new one
+    $identifierUris = @()
+    $app.IdentifierUris | foreach($identifierUris += ($_))
+
+    $base = $params.parameters.masterClusterDns.value
+    $newIdentifierURI = "https://$base"
+    $newReplyURL = "https://$base/oauth2callback/$($app.DisplayName)"
+
+    if($replyURLs.Contains($newReplyURL) -ne $true)
     {
         Write-Host "Reply URL does not exist, adding."
-        Set-AzureRmADApplication -ApplicationId $appId -ReplyUrl $replyURLs
+        $replyURLs += $newReplyURL
+        Set-AzureRmADApplication -ApplicationId $app.ApplicationId -ReplyUrl $replyURLs
     }
     else {
         Write-Host "Reply URL already exists, not adding."
+    }
+
+    if($identifierUris.Contains($newIdentifierURI) -ne $true)
+    {
+        Write-Host "Identifier URI does not exist, adding."
+        $identifierUris += $newIdentifierURI
+        Set-AzureRmADApplication -ApplicationId $app.ApplicationId -IdentifierUri $identifierUris
+    }
+    else {
+        Write-Host "Identifier URI already exists, not adding."
     }
 
     
@@ -121,8 +139,8 @@ else{
     Write-Host "Using existing resource group '$resourceGroupName'";
 }
 
-Write-Host "Verify new reply URL is in the Application."
-UpdateAADReplyUrls
+Write-Host "Updating AAD provider with new cluster info."
+UpdateAADProvider
 
 if($ServiceAppName -ne "")
 {
