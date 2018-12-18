@@ -51,9 +51,10 @@ export NOPROXYENTRY="${43}"
 export DOMAIN=${44}
 export IDENTAPPID=${45}
 export IDENTAPPSECRET=${46}
+export IDENTAPPDISPLAYNAME=${47}
 export BASTION=$(hostname)
 
-echo "./deployOpenShift.sh $SUDOUSER $PASSWORD $MASTER $MASTERPUBLICIPHOSTNAME $MASTERPUBLICIPADDRESS $INFRA $NODE $NODECOUNT $INFRACOUNT $MASTERCOUNT $ROUTING $REGISTRYSA $ACCOUNTKEY $METRICS $LOGGING $TENANTID $SUBSCRIPTIONID $AADCLIENTID $AADCLIENTSECRET $RESOURCEGROUP $LOCATION $AZURE $STORAGEKIND $ENABLECNS $CNS $CNSCOUNT $VNETNAME $NODENSG $NODEAVAILIBILITYSET $MASTERCLUSTERTYPE $PRIVATEIP $PRIVATEDNS $MASTERPIPNAME $ROUTERCLUSTERTYPE $INFRAPIPNAME $IMAGEURL $WEBSTORAGE $CUSTOMROUTINGCERTTYPE $CUSTOMMASTERCERTTYPE $PROXYSETTING $HTTPPROXYENTRY $HTTSPPROXYENTRY $NOPROXYENTRY $DOMAIN $IDENTNAME $IDENTAPPSECRET"
+echo "./deployOpenShift.sh $SUDOUSER $PASSWORD $MASTER $MASTERPUBLICIPHOSTNAME $MASTERPUBLICIPADDRESS $INFRA $NODE $NODECOUNT $INFRACOUNT $MASTERCOUNT $ROUTING $REGISTRYSA $ACCOUNTKEY $METRICS $LOGGING $TENANTID $SUBSCRIPTIONID $AADCLIENTID $AADCLIENTSECRET $RESOURCEGROUP $LOCATION $AZURE $STORAGEKIND $ENABLECNS $CNS $CNSCOUNT $VNETNAME $NODENSG $NODEAVAILIBILITYSET $MASTERCLUSTERTYPE $PRIVATEIP $PRIVATEDNS $MASTERPIPNAME $ROUTERCLUSTERTYPE $INFRAPIPNAME $IMAGEURL $WEBSTORAGE $CUSTOMROUTINGCERTTYPE $CUSTOMMASTERCERTTYPE $PROXYSETTING $HTTPPROXYENTRY $HTTSPPROXYENTRY $NOPROXYENTRY $DOMAIN $IDENTAPPDISPLAYNAME $IDENTAPPSECRET $IDENTAPPDISPLAYNAME"
 echo $(date) " - DOMAIN: " $DOMAIN
 if [ $DOMAIN != "" ]
 then
@@ -385,7 +386,7 @@ $MASTERCLUSTERADDRESS
 #openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
 
 # Enable Azure Active Directory as ID provider.
-openshift_master_identity_providers=[{"name": "$IDENTNAME", "login": "true", "challenge": "false", "kind": "OpenIDIdentityProvider", "client_id": "$IDENTAPPID", "client_secret": "$IDENTAPPSECRET", "claims": {"id": ["sub"], "preferredUsername": ["upn","unique_name"], "name": ["name"], "email": ["email"]}, "urls": {"authorize": "https://login.microsoftonline.com/$TENANTID/oauth2/authorize", "token": "https://login.microsoftonline.com/$TENANTID/oauth2/token"}}]
+openshift_master_identity_providers=[{"name": "$IDENTAPPDISPLAYNAME", "login": "true", "challenge": "false", "kind": "OpenIDIdentityProvider", "client_id": "$IDENTAPPID", "client_secret": "$IDENTAPPSECRET", "claims": {"id": ["sub"], "preferredUsername": ["upn","unique_name"], "name": ["name"], "email": ["email"]}, "urls": {"authorize": "https://login.microsoftonline.com/$TENANTID/oauth2/authorize", "token": "https://login.microsoftonline.com/$TENANTID/oauth2/token"}}]
 openshift_master_openid_ca_file=/tmp/msftAad.crt
 
 # Setup metrics

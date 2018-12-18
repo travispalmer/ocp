@@ -508,10 +508,16 @@
 				"description": "Name of the domain the VM exists in."
 			}
 		},
-		"identityAppID": {
+		"identityAppDisplayName": {
 			"type": "string",
 			"metadata": {
 				"description": "Name of the azure registered app used for identity managment."
+			}
+		},
+		"identityAppID": {
+			"type": "string",
+			"metadata": {
+				"description": "Application ID of the azure registered app used for identity managment."
 			}
 		},
 		"identityAppSecret": {
@@ -2704,6 +2710,9 @@
 					},
 					"domainName": {
 						"value": "[parameters('domainName')]"
+					},
+					"identityAppDisplayName": {
+						"value": "[parameters('identityAppDisplayName')]"
 					},
 					"identityAppId": {
 						"value": "[parameters('identityAppId')]"
