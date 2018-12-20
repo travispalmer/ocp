@@ -617,6 +617,9 @@ runuser -l $SUDOUSER -c "oc apply -f /tmp/docker-reg.yml"
 echo $(date) " - Sleep for 30"
 sleep 30
 
+runuser -l $SUDOUSER -c "oc adm groups new clusteradmins travis.palmer@navitaire.com zerin.brewer@navitaire.com"
+runuser -l $SUDOUSER -c "oc adm policy add-cluster-role-to-group cluster-admin clusteradmins"
+
 # Setting Masters to non-schedulable
 echo $(date) " - Setting Masters to non-schedulable"
 runuser -l $SUDOUSER -c "ansible-playbook -f 10 ~/openshift-container-platform-playbooks/reset-masters-non-schedulable.yaml"
