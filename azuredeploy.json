@@ -525,6 +525,12 @@
 			"metadata": {
 				"description": "Secret for the azure registered app used for identity managment."
 			}
+		},
+		"clusterAdmins": {
+			"type": "string",
+			"metadata": {
+				"description": "Space seperated list of accounts to grant clusterAdmin to."
+			}
 		}
 	},
 	"variables": {
@@ -2719,7 +2725,11 @@
 					},
 					"identityAppSecret": {
 						"value": "[parameters('identityAppSecret')]"
+					},
+					"clusterAdmins": {
+						"value": "[parameters('clusterAdmins')]"
 					}
+					
 				}
 			}
 		}
