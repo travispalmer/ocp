@@ -13,7 +13,7 @@ export NOPROXYENTRY="$7"
 # Remove RHUI
 
 rm -f /etc/yum.repos.d/rh-cloud.repo
-sleep 10
+sleep 100
 
 # Configure Proxy settings
 if [[ $PROXYSETTING == "custom" ]]

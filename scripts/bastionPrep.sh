@@ -30,7 +30,7 @@ runuser -l $SUDOUSER -c "chmod 600 ~/.ssh/id_rsa*"
 # Remove RHUI
 
 rm -f /etc/yum.repos.d/rh-cloud.repo
-sleep 10
+sleep 100
 
 # Configure Proxy settings
 if [[ $PROXYSETTING == "custom" ]]
