@@ -173,7 +173,8 @@ echo $(date) " - Create variable for master api certificate based on certificate
 if [[ $CUSTOMMASTERCERTTYPE == "custom" ]]
 then
 	MASTERCERTIFICATE="openshift_master_overwrite_named_certificates=true
-openshift_master_named_certificates=[{\"names\": [\"$MASTERPUBLICIPHOSTNAME\"], \"cafile\": \"/tmp/masterca.pem\", \"certfile\": \"/tmp/mastercert.pem\", \"keyfile\": \"/tmp/masterkey.pem\"}]"
+openshift_master_named_certificates=[{\"names\": [\"$MASTERPUBLICIPHOSTNAME\"], \"cafile\": \"/tmp/masterca.pem\", \"certfile\": \"/tmp/mastercert.pem\", \"keyfile\": \"/tmp/masterkey.pem\"}]
+openshift_additional_ca=/tmp/masterca.pem"
 else
 	MASTERCERTIFICATE=""
 fi
